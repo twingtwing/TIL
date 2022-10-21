@@ -22,3 +22,9 @@ Queue의 Rear에서 이루어지는 삽입연산을 enQueue, Front에서 이루�
 
 ## 4. Deque
 Deque는 양쪽 끝에서 삽입과 삭제가 모두 발생하는 Queue로서, Stack과 Queue의 성지를 모두 가지고 있다. Deque에서 Front/Rear를 Stack의 top으로 생각하여 push, pop연산 모두 각각 가능하다.
+
+---
+
+## Reference
+
+- 자바로 배우는 자료구조 방식
