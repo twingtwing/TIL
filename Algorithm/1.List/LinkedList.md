@@ -120,22 +120,6 @@ class LinkedList{
     }
     
 }
-
-public class SinglyLinkedList {
-    public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.insertLastNode("월");
-        list.insertLastNode("화");
-        list.insertLastNode("수");
-        list.printList();
-
-        list.insertMiddleNode(list.searchNode("수"),"금");
-        list.printList();
-
-        list.deleteLastNode();
-        list.printList();
-    }
-}
 ```
 </details>
 <br>
