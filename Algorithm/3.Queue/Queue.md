@@ -10,8 +10,8 @@ Queue는 가장 처음에 들어간 데이터가 삭제되는 **선입선출**(F
 
 ## 2. 순차 자료구조 방식을 이용한 Queue의 구현
 
-### 2.1 선형큐  
-순차 자료구조인 1차원 배열을 이용하여 Queue을 구현할 수 있다. 큐에 원소가 쌓이는 순서는 배열의 인덱스(index)로 표현한다. **Front은 첫번째 원소의 인덱스, Rear은 마지막 원소의 인덱스**를 의미한다.  
+### 2.1 Linear Queue  
+순차 자료구조인 1차원 배열을 이용하여 선형 큐를 구현할 수 있다. 큐에 원소가 쌓이는 순서는 배열의 인덱스(index)로 표현한다. **Front은 첫번째 원소의 인덱스, Rear은 마지막 원소의 인덱스**를 의미한다.  
 초기 상태의 경우에는 Front = Rear = -1, 포화 상태의 경우에는 Rear = length - 1, 공백상태의 경우 Front = Rear이다.
 
 <details>
@@ -83,34 +83,284 @@ class ArrayQueue implements Queue{
 </details>
 <br>
 
-### 2.2 원형 큐  
-선형큐는 포화상태가 아닐 경우에만 삽입연산을 수행하도록 정의되어 있다. 그러나, front의 위치가 진짜 이 아닐경우, 빈자리가 있음에도 raer가 n-1이므로 포화상태로 인식한다. 삽입/삭제 연산을 진행하지 않는다. 그렇기에 빈부분을 없애기 위해 앞부분으로 이동시켜 위치를 조정해야한다. 이러한 이동 작업은 큐의 효율성을 떨어 뜨린다. 이러한 문제를 해결하기 위해 , 1차원 배열을 사용하지만 처음과 끝이 연결되어 있는 원형 Queue가 있다.  
-원형큐에서는 초기 공백 상태일 때 front와 rear의 값이 0이 되고, 공백 상태와 포화 상태를 구분하기 위해서 자리 하는 항상 비워둔다. 원형큐에서는 공백 상태 조건은 front = rear가 된다.  rear는 앞으로 이동하면서 원소를 삽입하고, front는 rear가 이동한 방향을 따라가면서 원소를 삭제한다. 원형 큐에서는 배열의 인덱스가 n-1다음에 다시 0이 되어야하므로 사용할 다음 인덱스를 정하기 위해서 나머지 연산자 mod를 사용한다.? 즉, 포화상태인 rear의 다음 위치 ((rear+1) mod n)는 현재의 front위치가 되어 더 이상 원소를 삽입할 수 없는 포화 상태가 된다..?????
+❗이때, front = rear가 아님에도 rear = length - 1이면, 포화상태로 인식하는 문제점이 발생한다. 이를 해결하기 위해서는 앞부분으로 이동시켜서 위치를 조정해야하지만, 이런 이동 작업은 큐의 효율성을 떨어 뜨린다.
+
+### 2.2 Circular Queue   
+선형 큐와 동일하게 1차원 배열을 사용하지만, 논리적으로는 배열의 처음과 끝이 연결되어 있는 자료구조를 원형큐라고 한다. 초기 상태의 경우 Front = Rear = 0, 공백 상태의 경우 Front = Rear이다. 공백 상태와 포화 상태를 쉽게 구분하기 위해서 자리 하나를 항상 비워둔다.  
+rear에 삽입되면서 인덱스 값이 length - 1 인 경우, 다시 0이 되어야한다. 이때, 다음 index는 ((rear + 1) mod length)연산을 통해 구하고,  다음 인덱스가 front위치가 일 경우에는 더 이상 삽입할 수 없는 포화 상태를 의미한다. 삭제 연산도 마찬가지로 front가 다음 index로 바뀌어야 하는데, ((front + 1) mod length) 연산을 통해 구한다.
 
 <details>
 <summary>순차 자료구조 방식을 이용한 Queue 알고리즘</summary>
 
 ```java
+class CircularQueue implements Queue{
+    private int front;
+    private int rear;
+    private int queueSize;
+    private char itemArray[];
+
+    CircularQueue(int queueSize){
+        this.front = 0;
+        this.rear = 0;
+        this.queueSize = queueSize;
+        this.itemArray = new char[this.queueSize];
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (front == rear);
+    }
+
+    public boolean isFull(){ // 다음 index 값이 front일 경우
+        // 공백 상태와 포화 상태를 구분하기 위해 자리를 1개 비워두기 때문에, 모든칸을 전부 사용하지 않는다.
+        return ((this.rear + 1) % this.queueSize == front);
+    }
+
+    @Override
+    public void enQueue(char item) {
+        if (isFull()) return;
+        rear = (rear + 1) % this.queueSize;
+        itemArray[rear] = item;
+        System.out.println(rear+" " +item);
+    }
+
+    @Override
+    public char deQueue() { // front가 다음 인덱스로 수정
+        if (isEmpty()) return 0;
+        front = (front+1) % this.queueSize;
+        return itemArray[front];
+    }
+
+    @Override
+    public void delete() {
+        if (isEmpty()) return;
+        front = (front+1) % this.queueSize;
+    }
+
+    @Override
+    public char peek() {
+        if (isEmpty()) return 0;
+        return itemArray[(front+1) % this.queueSize];
+    }
+
+    public void printQueue(){
+        if (isEmpty()) return;
+        int tempFront = this.front;
+        int tempRear = this.rear;
+        while (tempFront != tempRear){
+            tempFront = (tempFront + 1) % this.queueSize;
+            System.out.print(itemArray[tempFront]+" ");
+        }
+        System.out.println();
+    }
+}
 ```
 </details>
 <br>
 
 ## 3. 연결 자료구조 방식을 이용한 Queue의 구현
 
-### 3.1 연결큐  
-순차자료구조방식을 이용하게되면, 사용 크기가 데한되어 있어서 큐의 길이를 마음대로 변경할 수 없고, 원소가 없을 때에도 항상 처음 크기를 유지하고 있어야 하므로 메모리도 낭비된다. 이러한 문제를 극복하기 위해 연결 자료구조 방식을 이요하여 크기에 제한이 없는 연결큐를 구현한다.  
-연결 큐에서 원소는 데이터 필드와 링크 필드를 가진 노드로 구성하며, 첫 번째 노드를 가리키는 참조변수 front와 마지막 노드를 가리키는 참조변수 rear를 사용한다.(참조변수가 2개를 가진다.) 연결큐의 초기 상태는 front와 rear를 NULL로 초기화하여 표현한다. 즉, 둘다 NULL이면 공백 상태임을 알 수 있다. 삽입연산 시 새노드를 생성하여 데이터 필드에 저장하고, 삽입할 새 노드는 마지막 노드가 되어야하므로 링크 필드에 NULL로 저장한다. 이때 공백 상태였을 경우 FRONT, REAR모두 마지막 노드를 가리키고 참조값을 저장한다. 공백상태가 아니었던 경우에는 마지막이었던 노드가 삽입한 노드 의 참조값을 저장하고(마지막 노드 뒤에 새노드를 삽입) REAR 또한 해당 노드를 가리키도록 설정한다.  삭제연산의 경우에는 첫번째 노드를 삭제하고, FRONT가 새로운 첫번째 노드를 가리킨다. 이때 만약에 노드가 남지 않는다면 FRONT와 REAR에 참조된 값을 지우고 NULL로 초기화시켜준다.
+### 3.1 Linked Queue  
+선형큐와 원형큐에서 가지는 메모리 비효율성 문제를 극복하기 위해, 연결 자료구조 방식을 이용하여 구현한 Queue를 연결 큐라고 한다. 연결 큐에서 Front는 첫번째 Node, Rear은 마지막 Node를 참조한다.  
+초기 상태의 경우 Front = Rear = null, 공백 상태의 경우 Front = null이다.
 
 <details>
 <summary>연결 자료구조 방식을 이용한 Queue 알고리즘</summary>
 
 ```java
+class Node{
+    char data;
+    Node link;
+}
+
+class LinkedQueue implements Queue{
+    private Node front;
+    private Node rear;
+
+    LinkedQueue(){
+        this.front = null;
+        this.rear = null;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (this.front == null);
+    }
+
+    @Override
+    public void enQueue(char item) {
+        Node node = new Node();
+        node.data = item;
+        if (isEmpty()){
+            this.front = node;
+            this.rear = node;
+        }else{
+            rear.link = node;
+            this.rear = node;
+        }
+    }
+
+    @Override
+    public char deQueue() {
+        if (isEmpty()) return 0;
+        char result = this.front.data;
+        this.front = front.link;
+        if(front == null) rear = null;
+        return result;
+    }
+
+    @Override
+    public void delete() {
+        if (isEmpty()) return;
+        this.front = front.link;
+        if(front == null) rear = null;
+    }
+
+    @Override
+    public char peek() {
+        if (isEmpty()) return 0;
+        return this.front.data;
+    }
+
+    public void printQueue(){
+        if (isEmpty()) return;
+        Node temp = this.front;
+        while (temp != null){
+            System.out.print(temp.data + " ");
+            temp = temp.link;
+        }
+        System.out.println();
+    }
+}
 ```
 </details>
 <br>
 
-## 4. Deque
-Deque는 양쪽 끝에서 삽입과 삭제가 모두 발생하는 Queue로서, Stack과 Queue의 성지를 모두 가지고 있다. Deque에서 Front/Rear를 Stack의 top으로 생각하여 push, pop연산 모두 각각 가능하다.
+## 4. Deque (Double-ended Queue)
+Deque는 양쪽 끝에서 삽입과 삭제가 모두 발생하는 Queue로서, Stack과 Queue의 성질을 모두 가지고 있다. Deque에서 Front/Rear를 Stack의 top으로 생각하여 push, pop연산 모두 각각 가능하다.
+
+
+<details>
+<summary>Deque 알고리즘</summary>
+
+```java
+class DNode{
+    char data;
+    DNode rlink;
+    DNode llink;
+}
+
+class Deque{
+    DNode front;
+    DNode rear;
+
+    public Deque(){
+        front = null;
+        rear = null;
+    }
+
+    public boolean isEmpty(){
+        return (front == null);
+    }
+
+    public void insertFront(char item){
+        DNode node = new DNode();
+        node.data = item;
+        if (isEmpty()){
+            front = node;
+            rear = node;
+        }else{
+            front.llink = node;
+            node.rlink = front;
+            front = node;
+        }
+    }
+
+    public void insertRear(char item){
+        DNode node = new DNode();
+        node.data = item;
+        if (isEmpty()){
+            front = node;
+            rear = node;
+        }else{
+            rear.rlink = node;
+            node.llink = rear;
+            rear = node;
+        }
+    }
+
+    public char deleteFront(){
+        if (isEmpty()) return 0;
+        char result = front.data;
+        if (front.rlink == null){
+            front = null;
+            rear = null;
+        }else{
+            front = front.rlink;
+            front.llink = null;
+        }
+        return result;
+    }
+
+    public char deleteRear(){
+        if (isEmpty()) return 0;
+        char result = rear.data;
+        if (rear.llink == null){
+            front = null;
+            rear = null;
+        }else{
+            rear = rear.llink;
+            rear.rlink = null;
+        }
+        return result;
+    }
+
+    public void removeFront(){
+        if (isEmpty()) return;
+        if (front.rlink == null){
+            front = null;
+            rear = null;
+        }else{
+            front = front.rlink;
+            front.llink = null;
+        }
+    }
+
+    public void removeRear(){
+        if (isEmpty()) return;
+        if (rear.llink == null){
+            front = null;
+            rear = null;
+        }else{
+            rear = rear.llink;
+            rear.rlink = null;
+        }
+    }
+
+    public char peekFront(){
+        if (isEmpty()) return 0;
+        return front.data;
+    }
+
+    public char peekRear(){
+        if (isEmpty()) return 0;
+        return rear.data;
+    }
+
+    public void printDeque(){
+        if (isEmpty()) return;
+        DNode temp = this.front;
+        while (temp != null){
+            System.out.print(temp.data +" ");
+            temp = temp.rlink;
+        }
+        System.out.println();
+    }
+
+}
+```
+</details>
+<br>
 
 ---
 
