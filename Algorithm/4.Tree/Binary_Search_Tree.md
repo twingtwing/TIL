@@ -21,15 +21,15 @@
 삭제 연산도 마찬가지로 검색 연산를 수행해야한다. 삭제할 노드는 자식노드의 수에 따라 달라진다.
 
 1. 삭제할 노드가 단말노드인 경우 (차수가 0 인 경우)  
-: 해당 노드를 삭제하고, 부모노드의 링크 필드를 null로 설정한다.
+해당 노드를 삭제하고, 부모노드의 링크 필드를 null로 설정한다.
 
 2. 삭제할 노드가 한 개의 자식 노드가 잇는 경우 (차수가 1인경우)  
-: 해당 노드를 삭제하고, 자식노드를 부모노드 위치로 올려준다.
+해당 노드를 삭제하고, 자식노드를 부모노드 위치로 올려준다.
 
 3. 삭제할 노드가 두 개의 자식 노드가 있는 경우 (차수가 2인 경우)   
-: 이진 검색 트리를 유지해야하기 때문에, 왼쪽 서브트리의 노드들보다 가장 큰 키값을 가져야하고 오른쪽 서브트리보다 가장 작은 키값을 가져야한다. 그럴려면, 오른쪽 서브트리의 최솟값 Node 혹은 왼쪽 서브트리의 최댓값 Node를 찾아서 삭제 노드 대신 교체 해주면 된다.  
-    - 왼쪽 서브트리에서 가장 큰 키값의 노드를 탐색하는 작업은 왼쪽 서브트릐의 오른쪽 링크를 따라 계속이동하여 오른쪽 링크 필드가 null인 노드, 즉 가장 오른쪽에 있는 노드를 찾는 작업이 된다. 
-    - 오른쪽 서브트리에서 가장 작은 키 값의 노드를 탐색하는 작업은 오른 쪽 서브트리에서 왼쪽 링크를 따라 계속 이동하여 왼쪽 링크 필드가 null인 노드, 즉 가장 왼쪽에 있는 노드를 찾는 작업이 된다.
+이진 검색 트리를 유지해야하기 때문에, 왼쪽 서브트리의 노드들보다 가장 큰 키값을 가져오거나, 오른쪽 서브트리보다 가장 작은 키값을 가져와서 삭제 노드 대신 교체 해주어야 한다.  
+    - 왼쪽 서브트리에서 최댓값 : 왼쪽 서브트릐의 오른쪽 링크를 따라 계속이동하여 오른쪽 링크 필드가 null인 노드, 즉 가장 오른쪽에 있는 노드를 찾는 작업이 된다. 
+    - 오른쪽 서브트리의 최솟값 : 오른 쪽 서브트리에서 왼쪽 링크를 따라 계속 이동하여 왼쪽 링크 필드가 null인 노드, 즉 가장 왼쪽에 있는 노드를 찾는 작업이 된다.
 
 
 ## 3. 연결 자료구조 방식을 이용한 이진 검색 트리 구현
@@ -38,6 +38,58 @@
 <summary>Binary Search Tree 알고리즘</summary>
 
 ```java
+class Node{
+    char data;
+    Node left;
+    Node right;
+}
+
+class BinarySearchTree{
+    private Node root;
+
+    public void inserBST(char data){
+        this.root = insertKey(this.root,data);
+    }
+
+    public Node insertKey(Node root, char data){
+        Node newNode = new Node();
+        newNode.data = data;
+        if (root == null){
+            return newNode;
+        }else if(root.data > data){
+            root.left = insertKey(root.left,data);
+        }else if(root.data < data){
+            root.right = insertKey(root.right,data);
+        }
+        return root;
+    }
+
+    public Node searchBST(char data){
+        Node node = this.root;
+        while(node != null){
+            if (node.data == data){
+                return node;
+            }else if(node.data > data){
+                node = node.left;
+            }else if(node.data < data){
+                node = node.right;
+            }
+        }
+        return node;
+    }
+
+    public void inorder(){
+        inorder(this.root);
+        System.out.println();
+    }
+
+    public void inorder(Node node){
+        if (node == null) return;
+        inorder(node.left);
+        System.out.printf("%c ",node.data);
+        inorder(node.right);
+    }
+}
 ```
 </details>
 <br>
