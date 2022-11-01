@@ -15,7 +15,7 @@
 ### 3.1 순차 자료구조 방식을 이용한 이진트리 구현
 높이가 h인 포화 이진트리의 노드번호를 배열의 인덱스로 사용하여 1차원 배열로 구현한다. 인덱스 계산을 용이하기 위해 인덱스 0번을 비워두고, 1번에다가 Root Node를 저장한다. 부모노드와 자식노드 인덱스에 일정한 규칙이 있다?
 
-<img width="500" src="../../Image/array_binary_tree.png" title="Linked list Data Structure">   
+<img width="500" src="../../Image/array_binary_tree.png" title="Array Binary Tree Data Structure">   
 
 <small>출처 : <cite>https://opendatastructures.org/versions/edition-0.1d/ods-java/node52.html</cite> </small>
 
