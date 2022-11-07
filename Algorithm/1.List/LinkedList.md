@@ -34,91 +34,47 @@ Node에 link field가 한 개 밖에 없는 연결리스트를 단순 연결 리
 <summary>단순 연결 리스트 알고리즘</summary>
 
 ```java
-class Node{
-    private String data;
-    public Node link;
-    public Node(){
-        this.data = null;
-        this.link = null;
+class SinglyLinkedList{
+
+    Node header;
+
+    static class Node{
+        int data;
+        Node link;
     }
 
-    public Node(String data){
-        this.data = data;
-        this.link = null;
+    SinglyLinkedList(){
+        header = new Node();
     }
 
-    public Node(String data, Node link){
-        this.data = data;
-        this.link = link;
-    }
-
-    public String getData(){
-        return this.data;
-    }
-}
-
-class LinkedList{
-    private Node head;
-    public LinkedList(){
-        head = null;
-    }
-    
-    //insert 연산
-    public void insertMiddleNode(Node pre, String data){ 
-        if (pre == null) return;
-        Node node = new Node(data);
-        node.link = pre.link;
-        pre.link = node;
-    }
-    public void insertLastNode(String data){
-        Node node = new Node(data);
-        if (head == null){
-            this.head = node;
-        }else{
-            Node temp = head; // 임시 참조 변수에 주소를 참조
-            while (temp.link != null) temp = temp.link; // node 순회
-            temp.link = node;
+    void append(int data){
+        Node end = new Node();
+        end.data = data;
+        Node next = this.header;
+        while (next.link != null){
+            next = next.link;
         }
+        next.link = end;
     }
-    
-    //delete 연산
-    public void deleteLastNode(){
-        Node pre, temp;
-        if (head == null) return;
-        if (head.link == null){
-            head = null;
-        }else{
-            pre = head;
-            temp = head.link;
-            while (temp.link != null){
-                pre = temp;
-                temp = temp.link;
-            }
-            pre.link = null;
+
+    void delete(int data){
+        Node next = this.header;
+        while (next.link != null){
+            if (next.link.data == data)
+                next.link = next.link.link;
+            else
+                next = next.link;
         }
     }
 
-    //Search
-    public Node searchNode(String data){
-        if (head ==null) return null;
-        Node temp = head.link;
-        while (temp != null){
-            if (temp.getData() == data) return temp;
-            temp = temp.link;
-        }
-        return null;
-    }
-
-    public void printList(){
-        if (head == null) return;
-        Node temp = head;
-        while (temp != null){
-            System.out.print(temp.getData());
-            temp = temp.link;
+    void retrieve(){
+        Node node = this.header.link;
+        while (node != null){
+            System.out.printf("%d ->",node.data);
+            node = node.link;
         }
         System.out.println();
     }
-    
 }
 ```
 </details>
