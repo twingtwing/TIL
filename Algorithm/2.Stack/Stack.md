@@ -90,60 +90,42 @@ class ArrayStack implements Stack{
 <summary>연결 자료구조 방식을 이용한 Stack 알고리즘</summary>
 
 ```java
-class StackNode{
-    char data;
-    StackNode link;
-}
+class Stack<T>{
 
-class LinkedStack implements Stack{
-    private StackNode top;
+    Node<T> top;
 
-    LinkedStack(){
-        this.top = null;
+    class Node<T>{
+        T data;
+        Node<T> link;
+
+        Node(){}
+        Node(T data){this.data = data;}
     }
 
-    @Override
-    public boolean isEmpty() {
-        return (top == null);
+    Stack(){
+        top = new Node<T>();
     }
 
-    @Override
-    public void push(char item) {
-        StackNode node = new StackNode();
-        node.data = item;
-        node.link = this.top;
-        this.top = node;
+    boolean isEmpty(){return this.top.link == null;}
+
+    void push(T data){
+        Node<T> node = new Node<>(data);
+        node.link = this.top.link;
+        this.top.link = node;
     }
 
-    @Override
-    public char pop() {
-        if (isEmpty()) return 0;
-        char result = this.top.data;
-        this.top = this.top.link;
-        return result;
+    T pop(){
+        if (isEmpty()) throw new EmptyStackException();
+        T data = this.top.link.data;
+        this.top.link = this.top.link.link;
+        return data;
     }
 
-    @Override
-    public void delete() {
-        if (isEmpty()) return;
-        this.top = this.top.link;
+    T peek(){
+        if (isEmpty()) throw new EmptyStackException();
+        return this.top.link.data;
     }
-
-    @Override
-    public char peek() {
-        if (isEmpty()) return 0;
-        return this.top.data;
-    }
-
-    public void printStack(){
-        if (isEmpty()) return;
-        StackNode temp = top;
-        while (temp != null){
-            System.out.print(temp.data+" ");
-            temp = temp.link;
-        }
-        System.out.println();
-    }
+    
 }
 ```
 </details>
