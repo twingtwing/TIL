@@ -23,7 +23,6 @@ class ArrayQueue implements Queue{
     private int rear; // 가장 나중에 들어가는 데이터 index
     private int queueSize;
     private char[] itemArray;
-
     ArrayQueue(){
         this.front = -1;
         this.rear = -1;
@@ -36,40 +35,32 @@ class ArrayQueue implements Queue{
         this.queueSize = queueSize;
         this.itemArray = new char[this.queueSize];
     }
-
     @Override
     public boolean isEmpty() {
         return (front == rear);
     }
-
     public boolean isFull(){
         return (rear == (queueSize -1));
     }
-
     @Override
     public void enQueue(char item) { // insert연산은 rear
         if (isFull()) return;
         itemArray[++rear] = item;
-
     }
-
     @Override
     public char deQueue() { // delete연산은 front
         if (isEmpty()) return 0;
         return itemArray[++front];
     }
-
     @Override
     public void delete() {
         if (isEmpty()) return;
         ++front;
     }
-
     @Override
     public char peek() {
         return itemArray[front + 1];
     }
-
     public void printQueue(){
         if (isEmpty()) return;
         for (int i = front + 1; i <= rear; i++){
@@ -77,7 +68,6 @@ class ArrayQueue implements Queue{
         }
         System.out.println();
     }
-
 }
 ```
 </details>
@@ -90,7 +80,7 @@ class ArrayQueue implements Queue{
 rear에 삽입되면서 인덱스 값이 length - 1 인 경우, 다시 0이 되어야한다. 이때, 다음 index는 ((rear + 1) mod length)연산을 통해 구하고,  다음 인덱스가 front위치가 일 경우에는 더 이상 삽입할 수 없는 포화 상태를 의미한다. 삭제 연산도 마찬가지로 front가 다음 index로 바뀌어야 하는데, ((front + 1) mod length) 연산을 통해 구한다.
 
 <details>
-<summary>순차 자료구조 방식을 이용한 Queue 알고리즘</summary>
+<summary>순차 자료구조 방식을 이용한 Circular Queue 알고리즘</summary>
 
 ```java
 class CircularQueue implements Queue{
@@ -168,69 +158,51 @@ class CircularQueue implements Queue{
 <summary>연결 자료구조 방식을 이용한 Queue 알고리즘</summary>
 
 ```java
-class Node{
-    char data;
-    Node link;
-}
+class Queue<T>{
 
-class LinkedQueue implements Queue{
-    private Node front;
-    private Node rear;
+    Node<T> front; //삭제연산이 일어나는 위치
+    Node<T> rear;  //삽입연산이 일어나는 위치
 
-    LinkedQueue(){
-        this.front = null;
-        this.rear = null;
+    class Node<T>{
+        T data;
+        Node<T> link;
+        Node(){}
+        Node(T data){this.data = data;}
     }
 
-    @Override
-    public boolean isEmpty() {
-        return (this.front == null);
+    boolean isEmpty(){return this.front == null;}
+
+    void enQueue(T data){
+        Node<T> node = new Node<>(data);
+        if (isEmpty()) this.front = node;
+        if (this.rear != null) this.rear.link = node;
+        this.rear = node;
     }
 
-    @Override
-    public void enQueue(char item) {
-        Node node = new Node();
-        node.data = item;
-        if (isEmpty()){
-            this.front = node;
-            this.rear = node;
-        }else{
-            rear.link = node;
-            this.rear = node;
-        }
-    }
-
-    @Override
-    public char deQueue() {
-        if (isEmpty()) return 0;
-        char result = this.front.data;
-        this.front = front.link;
-        if(front == null) rear = null;
+    T deQueue(){
+        if(isEmpty()) throw new NoSuchElementException();
+        T result = this.front.data;
+        this.front = this.front.link;
+        if (isEmpty()) this.rear = null;
         return result;
     }
 
-    @Override
-    public void delete() {
-        if (isEmpty()) return;
-        this.front = front.link;
-        if(front == null) rear = null;
-    }
-
-    @Override
-    public char peek() {
-        if (isEmpty()) return 0;
+    T peek(){
+        if(isEmpty()) throw new NoSuchElementException();
         return this.front.data;
     }
 
-    public void printQueue(){
-        if (isEmpty()) return;
-        Node temp = this.front;
-        while (temp != null){
-            System.out.print(temp.data + " ");
-            temp = temp.link;
+    void retrive(){
+        if (isEmpty()) throw new NoSuchElementException();
+        Node<T> node =  this.front;
+        while(node.link != null){
+            System.out.print(node.data + "->");
+            node = node.link;
         }
+        System.out.print(node.data);
         System.out.println();
     }
+
 }
 ```
 </details>

@@ -14,67 +14,203 @@ top으로만 접근이 가능하기 때문에 나중에 들어온 자료가 맨 
 
 <small>출처 : <cite>https://www.geeksforgeeks.org/how-to-implement-stack-in-java-using-array-and-generics/</cite> </small>
 
+#### 순차 자료구조 방식을 이용한 Stack 알고리즘
+
 <details>
-<summary>순차 자료구조 방식을 이용한 Stack 알고리즘</summary>
+<summary>1. 고정길이</summary>
 
 ```java
-class ArrayStack implements Stack{
-    private int top; // top index를 저장하는 변수
-    private int stackSize; 
-    private char itemArray[];
-    
-    ArrayStack(){
-        this.top = -1;
-        this.stackSize = 0;
-        this.itemArray = null;
-    }
-    ArrayStack(int stackSize){
-        this.top = -1;
-        this.stackSize = stackSize;
-        this.itemArray = new char[stackSize];
+class StackFixArray{
+    int len;
+    int part;
+    int[] top;
+    int[] stackAry;
+
+    StackFixArray(int len, int part){
+        this.len = len;
+        this.part = part;
+        this.top = new int[part];
+        this.stackAry = new int[len*part];
+
+        Arrays.fill(top,-1);
     }
 
-    @Override
-    public boolean isEmpty() {
-        return (this.top == -1);
-    }
-    
-    public boolean isFull(){
-        return (this.top == this.stackSize -1);
+    boolean isEmpty(int partIndex){return this.top[partIndex] == -1;}
+
+    boolean isFull(int partIndex){return this.top[partIndex] == len-1;}
+
+    int getIndex(int partIndex){
+        if (partIndex >= part) throw new IndexOutOfBoundsException();
+        return partIndex * len + this.top[partIndex];
     }
 
-    @Override
-    public void push(char item) {
-        if (isFull()) return;
-        itemArray[++top] = item;
-    }
-    
-    @Override
-    public char pop() {
-        if (isEmpty()) return 0;
-        return itemArray[top--]; 
+    void push(int partIndex, int data) throws FullStackException{
+        if (isFull(partIndex)) throw new FullStackException();
+        this.stackAry[getIndex(partIndex) + 1] = data;
+        this.top[partIndex]++;
     }
 
-    @Override
-    public void delete() {
-        if (isEmpty()) return;
-        top--;
+    int pop(int partIndex){
+        if (isEmpty(partIndex)) throw new EmptyStackException();
+        int result = this.stackAry[getIndex(partIndex)];
+        this.top[partIndex]--;
+        return result;
     }
 
-    @Override
-    public char peek() {
-        if (isEmpty()) return 0;
-        return itemArray[top];
+    int peek(int partIndex){
+        if (isEmpty(partIndex)) throw new EmptyStackException();
+        return this.stackAry[getIndex(partIndex)];
     }
 
-    public void printStack(){
-        if (isEmpty()) return;
-        int temp = this.top;
-        while (temp != -1){
-            System.out.print(itemArray[temp--]+" ");
+    void retireve(){
+        for (int i = 0; i < this.part; i++){
+            if (isEmpty(i)) throw new EmptyStackException();
+            System.out.print(i+1+" 번째 stack : ");
+            int limit = this.top[i] + i*this.len;
+            for (int j = 0; j < this.len; j++){
+                int index = i * this.len + j;
+                if (limit >= index) {
+                    System.out.print(stackAry[index]+" ");
+                }
+            }
+            System.out.println();
         }
-        System.out.println();
     }
+
+}
+```
+</details>
+
+<details>
+<summary>2. 유동길이</summary>
+
+```java
+class StackFlowArray{
+
+    Stack[] stacks;
+    int[] stackAry;
+
+    class Stack{
+        int top;
+        int len;
+        int start;
+
+        Stack(int len, int start){
+            this.top = -1;
+            this.len = len;
+            this.start = start;
+        }
+
+        //입력한 index가 해당 stack영역안에 존재하는지 check
+        boolean inStack(int index){
+            if(index < 0 || index >= stackAry.length) return false;
+            //배열을 하나로 원으로 생각하기 때문에 가상의 값을 만듦
+            int fakeIndex = index < start ? index + stackAry.length : index;
+            int fakeEnd = start + len;
+            return start <= fakeIndex && fakeIndex < fakeEnd;
+        }
+
+        boolean isFull(){return this.top == this.len - 1;}
+
+        boolean isEmpty(){return this.top == -1;}
+
+        int getLastStackIndex(){return adjustIndex(start + len - 1);}
+
+        int getLastDataIndex(){return adjustIndex(start + top);}
+
+        int getNewDataIndex(){return adjustIndex(getLastDataIndex() + 1);}
+    }
+
+    StackFlowArray(int size, int len){
+        stacks = new Stack[size];
+        for (int i = 0; i < size; i++){
+            stacks[i] = new Stack(len, len*i);
+        }
+        stackAry = new int[size * len];
+    }
+
+    // 가상의 index를 나머지값(%)을 통해 실제 Index값을 구함
+    // index가 -일 경우,
+    // %를 해도 -이므로 여기서 len값을 더해서 한 번더 %을 해준다.
+    int adjustIndex(int index){
+        int max = stackAry.length;
+        return ((index % max) + max) % max;
+    }
+
+    int previousIndex(int index){return adjustIndex(index - 1);}
+
+    int nextIndex(int index){return adjustIndex(index + 1);}
+
+    boolean allStackFull(){return totalDataSize() == stackAry.length;}
+
+    int totalDataSize(){
+        int result = 0;
+        for (Stack stack : stacks){
+            result += stack.top + 1;
+        }
+        return result;
+    }
+
+    // 확장
+    void expend(int stackIndex){
+        int nextIndex = (stackIndex + 1) % stacks.length;
+        if (stacks[nextIndex].isFull()) expend(nextIndex);
+        shift(nextIndex);
+        stacks[stackIndex].len ++;
+    }
+
+    // 뒤로 미르기
+    void shift(int stackIndex){
+        Stack stack = stacks[stackIndex];
+        int index = stack.getLastStackIndex();
+        while (stack.inStack(index)){ // 한칸씩 미뤄짐
+            stackAry[index] = stackAry[previousIndex(index)];
+            index = previousIndex(index);
+        }
+        stackAry[stack.start] = 0; //미뤄지기 전의 start는 초기화 해주어야함.
+        stack.start = nextIndex(stack.start);
+        stack.len--;
+    }
+
+    void push(int stackIndex, int data) throws FullStackException {
+        if (allStackFull()) throw new FullStackException();
+        Stack stack = stacks[stackIndex];
+        if (stack.isFull()){
+            expend(stackIndex);
+        }
+        stackAry[stack.getNewDataIndex()] = data;
+        stack.top++;
+    }
+
+    int pop(int stackIndex){
+        Stack stack = stacks[stackIndex];
+        if (stack.isEmpty()) throw new EmptyStackException();
+        int top = stack.getLastDataIndex();
+        int result = stackAry[top];
+        stackAry[top] = 0;
+        stack.top--;
+        return result;
+    }
+
+    int peek(int stackIndex){
+        Stack stack = stacks[stackIndex];
+        if (stack.isEmpty()) throw new EmptyStackException();
+        return stackAry[stack.getLastDataIndex()];
+    }
+
+    void retireve(){
+        for (Stack stack : stacks){
+            if (stack.isEmpty()) continue;
+            int index = stack.start;
+            while (index != stack.getLastDataIndex()){
+                System.out.print(stackAry[index] + " ");
+                index = nextIndex(index);
+            }
+            System.out.println();
+
+        }
+    }
+
 }
 ```
 </details>
