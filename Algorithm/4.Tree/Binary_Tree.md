@@ -3,12 +3,12 @@
 ## 1. 이진트리의 특징
 - 이진 트리는 공백노드도 이진 트리의 노드로 취급한다. (자식이 없는 단말 노드도 공백노드를 자식으로 가진 이진트리이다.)
 - n개의 노드를 가진 이진 트리는 항상 (n-1)개의 간선을 가진다.
-- 높이가 h인 이진트리가 가질 수 있는 노드의 최소 갯수는 (h+1)개, 최대 갯수는 (2^(h+1) -1 )개 이다.
+- 높이가 h인 이진트리가 가질 수 있는 노드의 최소 갯수는 (h+1)개, 최대 갯수는 (2<sup><small>(h+1)</small></sup> -1 )개 이다.
 
 ## 2. 이진트리의 분류
-- Full Binary Tree : 모든 Node가 Child를 0개 혹은 2개를 가진 Tree를 포화 이진트리라고 한다. 높이가 h일때, 노드는 항상 최대 갯수인 ( 2^(h+1) -1 )개를 가진다.
+- Full Binary Tree : 모든 Node가 Child를 0개 혹은 2개를 가진 Tree를 포화 이진트리라고 한다. 높이가 h일때, 노드는 항상 최대 갯수인 ( 2<sup><small>(h+1)</small></sup> -1 )개를 가진다.
 - Complete Binary Tree : 왼쪽부터 Node가 채워져 있는 Tree를 완전 이진 트리라고 한다.
-- Pervect Binary Tree : 모든 Node가 무조건 Child를 2개만 가지고 있고, Leaf의 Level이 모두 일치하는 Tree이다. N개의 Leaf을 가지고 있으면, Node의 수는 2^n - 1개를 가진다.
+- Pervect Binary Tree : 모든 Node가 무조건 Child를 2개만 가지고 있고, Leaf의 Level이 모두 일치하는 Tree이다. N개의 Leaf을 가지고 있으면, Node의 수는 2<sup><small>n</small></sup> - 1개를 가진다.
 - Skewed Binary Tree : 이진 트리중에서 최소 갯수의 노드를 가지면서, 왼쪽/오른쪽 중 한개만 서브트리로 가지는 Tree를 편향 이진 트리라고 한다. 오른쪽 혹은 왼쪽으로 일직선 형태를 가진다.
 
 ## 3. 이진트리의 구현
@@ -39,6 +39,46 @@
 <summary>연결 자료구조 방식을 이용한 Binary Tree 알고리즘</summary>
 
 ```java
+class Node<T>{
+    T data;
+    Node left;
+    Node right;
+
+    Node(){}
+    Node(T data){this.data = data;}
+}
+
+class BTLinkedList<T>{
+
+    private Node root;
+
+    public Node makeTree(Node left, Node right, T data){
+        Node result = new Node(data);
+        result.left = left;
+        result.right = right;
+        return result;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
+    }
+
+    public void preOrder(){
+        preOrder(this.root);
+    }
+
+    private void preOrder(Node node){
+        if (node == null) return;
+        System.out.print(node.data + " -> ");
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+}
 ```
 </details>
 <br> 
