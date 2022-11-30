@@ -163,6 +163,39 @@ class LinkedTree{
 </details>
 <br>
 
+## 5. 이진 트리의 검색
+
+### 5.1 너비 우선 탐색(BFS) 응용
+
+<details>
+<summary>Binary Tree BFS 알고리즘</summary>
+
+```java
+ArrayList<LinkedList<Node>> BFSToList() {
+    ArrayList<LinkedList<Node>> lists = new ArrayList<>();
+
+    LinkedList<Node> cur = new LinkedList<>();
+
+    if (!isEmpty()) cur.add(this.root);
+
+    // 너비우선탐색 변형
+    while (cur.size() > 0) {
+        lists.add(cur);
+
+        LinkedList<Node> prev = cur;
+        cur = new LinkedList<>();
+
+        for (Node p : prev) {
+            if (p.left != null) cur.add(p.left);
+            if (p.right != null) cur.add(p.right);
+        }
+
+    }
+
+    return lists;
+```
+</details>
+<br>
 ---
 
 ## Reference
