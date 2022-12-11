@@ -39,7 +39,7 @@ Complete Graph에서 일부의 정점/간선을 제외하여 만든 Graph를 부
 Path(경로) 유무에 따라 연결 그래프(Connected Graph)와 단절 그래프(Disconnected Graphh) 라고 한다.
 
 ## 3. Graph 구현
-### 3.1 순차 자료구조 방식을 이용한 Garph의 구현 : Adjacent Matrix
+### 3.1 순차 자료구조 방식을 이용하여 Graph를 구현 : Adjacent Matrix
     👉 그래프를 표(2차원 배열)에 구현하는 방법
 N개의 정점을 가진 그래프를 구성하는 간선의 유무를 저장하는 방법으로 N x N 정방행렬을 사용한다. 정점이 인접하면 1, 아니면 0으로 저장하여 간선의 유무를 표현한다. 이렇게 그래프를 표현한 행렬을 인접 행렬(Adjacent Matrix)이라고 한다.
 
@@ -82,7 +82,7 @@ class AdjMatrix{
 </details>    
 <br>
 
-### 3.2 연결 자료구조 방식을 이용한 Garph의 구현 : Adjacent List
+### 3.2 연결 자료구조 방식을 이용하여 Graph를 구현 : Adjacent List
     👉 각 정점에 대한 인접 정점들을 Linked List로 구현하는 방법
 그래프를 구성하는.각 정점에 대한 참조변수를 배열로 구성하고, 각 정점에 대한 Head 노드는 인접 정점의 노드 번호에 대한 오름차순으로 정렬??하고 연결한 Linked List를 가리킨다. 이렇게 그래프를 표현한 리스트을 인접 리스트(Adjacent List)이라고 한다.  
 N개의 정점과 X개의 간선을 가진 인접 리스트는 N개의 Head 노드 배열과 2X개의 노드가 필요하다. 방향그래프의 경우,  각 Head 노드에 연결되는 노드의 수는 각 정점 진출차수가 된다.
@@ -91,39 +91,33 @@ N개의 정점과 X개의 간선을 가진 인접 리스트는 N개의 Head 노�
 <summary>Adjacent List 알고리즘</summary>
 
 ```java
-class GraphNode{
-    int vertex;
-    GraphNode link;
-}
+class Graph{
 
-class AdjList{
-    private GraphNode head[] = new GraphNode[10];
-    private int totalV = 0;
+    Node [] nodes; // node들을 저장할 배열
 
-    public void inserVertex(){
-        totalV++;
-    }
-
-    public void insertEdge(int val01, int val02){
-        if (val01 < totalV && val02 < totalV){
-            GraphNode node = new GraphNode();
-            node.vertex = val02;
-            node.link = head[val01];
-            head[val01] = node;
+    class Node {
+        int data;
+        boolean marked; // 방문 여부
+        LinkedList<Node> adjacent; // 인접한 node
+        Node(int data) {
+            this.data = data;
+            this.marked = false;
+            adjacent = new LinkedList<>();
         }
     }
-    
-    public void printMatrix(){
-        GraphNode node = new GraphNode();
-        for (int i =0; i<totalV; i++){
-            node = head[i];
-            while (node != null){
-                System.out.printf("-> %c",node.vertex + 65);
-                node = node.link;
-            }
-            System.out.println();
-        }
+
+    Graph(int size){
+        this.nodes = new Node[size];
+        for (int i = 0; i < size; i++) nodes[i] = new Node(i);
     }
+
+    void addEdge(int i1, int i2){
+        Node n1 = this.nodes[i1];
+        Node n2 = this.nodes[i2];
+        if (!n1.adjacent.contains(n2)) n1.adjacent.add(n2);
+        if (!n2.adjacent.contains(n1)) n2.adjacent.add(n1);
+    }
+
 }
 ```
 </details>    
@@ -131,6 +125,8 @@ class AdjList{
 
 ## 4. Graph 순회
 >하나의 정점에서 시작하여 그래프에 있는 모든 정점을 한번씩 방문하는 것을 그래프 순회 또는 그래프 탐색이라 한다. 
+
+### Search는 bfs가 유리??
 
 ### 4.1 [Depth - First - Search(DFS : 깊이 우선 방법)](Depth%20_First%20_Search.md) :  
 깊이 우선 탐색은 시작 정점에서 한 방향으로 갈 수 있는 가장 먼 경로 까지 깊이 탐색하다가 더 이상 갈 곳이 없으면, 가장 마지막에 만났던 갈림길 간선이 있는 정점으로 되돌아와서 반복하는 순회방법이다. Stack 혹은 재귀호출를 이용하여 구현한다.  

@@ -14,17 +14,52 @@
 <summary>Depth First Search - Stack 알고리즘</summary>
 
 ```java
+void searchDFS(){searchDFS(0);}
+
+void searchDFS(int index) {searchDFS(this.nodes[index]);}
+
+void searchDFS(Node node) {
+    if (node == null) return;
+    node.marked = true;
+
+    Stack<Node> stack = new Stack<>();
+    stack.push(node);
+
+    while(!stack.isEmpty()){
+        Node pop = stack.pop();
+
+        for(Node n : pop.adjacent){
+            if (!n.marked){
+                n.marked = true;
+                stack.push(n);
+            }
+        }
+
+        System.out.print(pop.data + " ");
+    }
+
+}
 ```
 </details>    
 <br>
 
 ## 2. 재귀호출(Recursion)을 이용하여 구현
-시작노드를 호출하면, 자식노드를 호출하고 재귀호출이 계속 반복한다. 이때, 자식노드들을 호출할때, 정방향으로 우선적으로 호출한다. 또한, 자식노드들(a,b_) 중 정방향의 노드(a)를 우선 호출하여 해당 자식 노드들(b,c)을 호출하는데 여기에 형제 노드이면서 자식 노드인 (b)가 먼저 호출 되는것 이 아닌 어느 쪽부터 먼저 입력했는가를 우선적으로 호출???? 한다. 
+시작노드를 호출하면, 자식노드를 호출하고 재귀호출이 계속 반복한다. 이때, 자식노드들을 호출할때, 정방향으로 우선적으로 호출한다. 또한, 자식노드들(a,b_) 중 정방향의 노드(a)를 우선 호출하여 해당 자식 노드들(b,c)을 호출하는데 여기에 형제 노드이면서 자식 노드인 (b)가 먼저 호출 되는것 이 아닌 어느 쪽부터 먼저 입력했는가를 우선적으로 호출???? 한다. -->???? 
 
 <details>
 <summary>Depth First Search - Recursion 알고리즘</summary>
 
 ```java
+void searchDFS(){searchDFS(0);}
+
+void searchDFS(int index) {searchDFS(this.nodes[index]);}
+
+void searchDFS(Node node) {
+    if (node == null || node.marked) return;
+    node.marked = true;
+    System.out.print(node.data + " ");
+    for (Node n : node.adjacent) if (!n.marked) searchDFS(n);
+}
 ```
 </details>    
 <br>

@@ -16,19 +16,31 @@
 <summary>Breadth First Search - Queue 알고리즘</summary>
 
 ```java
+void searchBFS(){searchBFS(0);}
+
+void searchBFS(int index) {searchBFS(this.nodes[index]);}
+
+void searchBFS(Node node) {
+    if (node == null) return;
+    node.marked = true;
+
+    Queue<Node> queue = new LinkedList<>();
+    queue.add(node);
+
+    while(!queue.isEmpty()){ // 형제 노드
+        Node remove = queue.remove(); // 가장 처음에 넣은 node
+        for (Node n : remove.adjacent)
+            if (!n.marked){
+                n.marked = true;
+                queue.add(n); //형제 노드의 인접노드
+            }
+        System.out.print(remove.data + " ");
+    }
+
+}
 ```
 </details>        
 <br>
-
-## 2. BFS 변형
-
-### 2.1 BinarySearchTree BFS 변형
-
-<details>
-<summary>BinarySearchTree BFS 변형 알고리즘</summary>
-
-```java
-```
 
 ---
 
