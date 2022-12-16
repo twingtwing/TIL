@@ -14,7 +14,32 @@ StirnBuilder은 동기화를 지원하지 않지만 StringBuffer는 동기화를
 <summary>StringBuilder 알고리즘</summary>
 
 ```java
+class StringBuilder{
+    private int size;
+    private int index;
+    private char[] value;
 
+    StringBuilder(){
+        this.size = 1;
+        this.index = 0;
+        this.value = new char[this.size];
+    }
+
+    public void append(String str) {
+        if (str == null) return;
+        strCapacity(str.length());
+        for (int i = 0; i < str.length(); i++) value[index++] = str.toCharArray()[i];
+    }
+
+    private void strCapacity(int len) {
+        if (len == 0) return;
+        this.size = this.size + len; // ArrayList와 달리 문자의 길이 만큼 확장한다.
+        char[] newVal = new char[this.size];
+        for (int i = 0; i < this.value.length; i++) newVal[i] = this.value[i];
+        this.value = newVal;
+    }
+
+}
 ```
 </details>        
 <br>
