@@ -10,20 +10,25 @@
 
     👉 순차 자료구조 방식에서의 연산시간에 대한 문제와 저장공간에 대한 문제를 개선한 자료구조 표현방식
 
-## 2. Node
+## 2. 단점
+연결리스트는 요소의 위치를 배열처럼 한번에 접근하지 못한다. 즉, 시간복잡도가 n이 더 걸린다.  
+배열이 인덱스가 주어지면 search시간이 1이 걸리는 한편, 연결리스트는 처음부터 주어진 인덱스까지 탐색하는 시간이 필요하기 때문이다.  
+(보완점 : ListIterator<E> => 커서의 역활을 해주기 때문?)
+
+## 3. Node
 연결 자료구조 방식에서 원소는 연결될 다음 원소 원소에 대한 주소를 저장해야하기 때문에 <원소,주소>의 단위로 저장해야 한다. 이러한 단위구조를 노드(node)라고 한다.
 
 data field : 저장할 원소의 형태에 따라서 하나 이상의 필드로 구성하기도 한다.  
 link field : 메모리 참조 변수를 사용하여 다음노드의 주소에 대한 참조값을 저장하며, 링크 또는 참조(reference)라고 한다.  
 
 
-<img width="1000" src="../../Image/linked-list-concept.png" title="Linked list Data Structure">   
+<img width="1000" src="../Image/linked-list-concept.png" title="Linked list Data Structure">   
 
 <small>출처 : <cite>https://www.programiz.com/dsa/linked-list</cite> </small>
 
-## 3. 연결 자료구조 방식 종류
+## 4. 연결 자료구조 방식 종류
 
-### 3.1 Singly Linked List   
+### 4.1 Singly Linked List   
 Node에 link field가 한 개 밖에 없는 연결리스트를 단순 연결 리스트(Singly Linked List) 혹은 선형 연결 리스트(Linear Linked List) 혹은 연결 리스트라고 한다.  
 그러나, 한 방향으로만 순회하는 구조이기 때문에, 이전 노드를 접근할려면 첫 번째 노드에서 다시 시작해야 한다.
 
@@ -80,18 +85,18 @@ class SinglyLinkedList{
 </details>
 <br>
 
-### 3.2 Circular Linked List  
+### 4.2 Circular Linked List  
 마지막 노드가 첫번째 노드를 가리키게 하여 원형으로 만든 연결리스트를 원형 연결 리스트라고 한다. 원형으로 계속 순회하기 때문에 link를 따라 계속 순회하면, 이전 노드에 접근할 수 있다.  
 그러나, 이전 노드에 접근하기 위해서는 한 바퀴를 순회 해야하는 문제가 있다. 이는 link가 한방향으로만 되어 있기어서 반대방향으로 순회할 수 없기 때문에 발생한다.
 
 - 삽입 연산 : 마지막 노드의 link field는 NULL이 아닌 첫번째 노드를 참조하도록 하는 점을 제외하고는 연결 리스트 경우와 같다.
 - 삭제 연산 : 마지막 혹은 첫번째 노드 삭제시 중간 노드와 마찬가지로 link field를 변경해야 하는 경우를 제외하고는 연결리스트 경우와 같다.
 
-### 3.3 이중 (원형)연결 리스트   
+### 4.3 이중 (원형)연결 리스트   
 양방향으로 순회할 수 있도록 link field가 2개 인 리스트를 이중 연결 리스트라고 한다.  
 이중 연결리스트의 node는 [ 링크필드(llink/left filed) ][ 데이터필드 ][ 링크핑드(rlink/right filed  ) ] 두 개의 링크 필드와 한개의 데이터 필드로 구성된다. 
 
-<img width="800" src="../../Image/doubly-linked-list.png" title="Doubly Linked list Data Structure">   
+<img width="800" src="../Image/doubly-linked-list.png" title="Doubly Linked list Data Structure">   
 
 <small>출처 : <cite>https://www.alphacodingskills.com/ds/doubly-linked-list.php</cite> </small>
 
