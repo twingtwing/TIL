@@ -1,13 +1,18 @@
-# 📒✏️ Today I Learned
+# 📒 Today I Learned
 
-    ✨ 오늘 배운 공부를 저장하는 공간 ✨
+    ✨ 매일 공부한 내용을 기록하는 저장소 ✨
 
-## Algorithm
-- 
+## 📌 [Computer Science](Computer%20Science/README.md)
+<!-- - 네트워크
 
-## Data Structure
--
+- 운영체제
 
-## Network
--
+### 컴퓨터 구조 -->
 
+- [Data Structure](Computer%20Science/Data%20Structure/)
+
+<!-- ## 알고리즘
+
+- 테이터베이스 -->
+
+## 📌 Algorithms
