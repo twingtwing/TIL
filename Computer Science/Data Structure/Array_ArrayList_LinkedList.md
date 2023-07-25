@@ -29,7 +29,7 @@
 크기를 동적으로 조정할 수 있도록, 배열의 크기를 늘리는 작업으로, 시간 복잡도는 O(n)이다.
 
 ```java
-class ArrayList {
+public class ArrayList {
     private int size;
     private int index;
     private Object[] ary;
@@ -111,20 +111,20 @@ class ArrayList {
 <br>
 
 ```java
-class SinglyLinkedList{
+public class SinglyLinkedList{
 
-    Node header;
+    private Node header;
 
-    static class Node{
+    private static class Node{
         int data;
         Node link;
     }
 
-    SinglyLinkedList(){
+    public SinglyLinkedList(){
         this.header = new Node();
     }
 
-    void add(int data){
+    public void add(int data){
         Node end = new Node();
         end.data = data;
         Node next = this.header;
@@ -134,7 +134,7 @@ class SinglyLinkedList{
         next.link = end;
     }
 
-    void remove(int data){
+    public void remove(int data){
         Node next = this.header;
         while (next.link != null){
             if (next.link.data == data)

@@ -20,7 +20,7 @@
 ## 🏷️스택(Stack) 구현
 
 ### 순차 자료구조
-스택이 1차원 배열을 통해 구현되는 방식은 데이터가 순차적으로 쌓이는 순서를 배열의 인덱스로 표현한다. 마지막 데이터의 인덱스를 top이라는 변수에 저장하여 삽입 삭제가 마지막 데이터에서만 이루어지도록 구현한다
+스택이 1차원 배열을 통해 구현되는 방식은 데이터가 순차적으로 쌓이는 순서를 배열의 인덱스로 표현한다. 마지막 데이터의 인덱스를 top이라는 변수에 저장하여 삽입 삭제가 마지막 데이터에서만 이루어지도록 구현한다.
 
 
                      삽입                 삭제 
@@ -30,38 +30,38 @@
 
 
 ```java
-class Stack{
-    int top;
-    int [] stack;
+public class Stack{
+    private int top;
+    private int [] stack;
 
-    Stack(int len){
-        top = -1;
-        stack = new int[len];
+    public Stack(int len){
+        this.top = -1;
+        this.stack = new int[len];
     }
 
-    int size(){
+    public int size(){
         return top + 1;
     }
 
-    boolean isEmpty(){
+    public boolean isEmpty(){
         return top == -1;
     }
 
-    boolean isFull(){
+    public boolean isFull(){
         return size() == stack.length;
     }
 
-    void push(int data){
+    public void push(int data){
         if (isFull()) throw new IllegalStateException("Stack is Full");
         stack[++top] = data;
     }
 
-    int pop(){
+    public int pop(){
         if (isEmpty()) throw new IllegalStateException("Stack is Empty");
         return stack[top--];
     }
 
-    int peek(){
+    public int peek(){
         if (isEmpty()) throw new IllegalStateException("Stack is Empty");
         return stack[top];
     }
@@ -102,11 +102,11 @@ class Stack{
 <br>
 
 ```java
-class Stack{
+public class Stack{
 
-    Node top;
+    private Node top;
 
-    class Node{
+    private static class Node{
         int data;
         Node link;
 
@@ -114,26 +114,26 @@ class Stack{
         Node(int data){this.data = data;}
     }
 
-    Stack(){
+    public Stack(){
         top = new Node();
     }
 
-    boolean isEmpty(){return top.link == null;}
+    public boolean isEmpty(){return top.link == null;}
 
-    void push(int data){
+    public void push(int data){
         Node node = new Node(data);
         node.link = top.link;
         top.link = node;
     }
 
-    int pop(){
+    public int pop(){
         if (isEmpty()) throw new EmptyStackException();
         int data = top.link.data;
         top.link = top.link.link;
         return data;
     }
 
-    int peek(){
+    public int peek(){
         if (isEmpty()) throw new EmptyStackException();
         return top.link.data;
     }
