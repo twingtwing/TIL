@@ -45,26 +45,17 @@
 ## 🏷️ 트리(Tree) 종류
 
 ### [Binary Tree](Binary_Tree.md) 
-이진 트리는 각 노드가 최대 2개의 자식 노드를 가지는 Tree 구조를 말한다.
+이진 트리는 모든 노드가 최대 2개의 자식 노드를 가지는 Tree 구조를 말한다.
 
 ### [Binary Search Tree](Binary_Search_Tree.md) 
-이진 검색 트리는 각 노드가 최대 2개의 자식 노드를 가지면서, `왼쪽 자식 < 부모 < 오른쪽 자식` 관계를 가지는 Tree 구조를 말한다.
+이진 검색 트리는 모든 노드가 최대 2개의 자식 노드를 가지면서, `왼쪽 자식 < 부모 < 오른쪽 자식` 관계를 가지는 Tree 구조를 말한다.
 
 ### [Binary Heap](Heap.md)
 이진 힙은 완전 이진 트리 기반의, 최대값 혹은 최솟값 탐색을 빠르게 하기 위해 구현된 자료구조이다.
 
 ### Balanced Tree ⬌ UnBalanced Tree
 
-// 그림추가
-
-               ◯ : root                 ◯ : root
-             /     \                   /     \
-           ◯       ◯               ◯       ◯
-          /  \     /  \             /       
-        ◯    ◯ ◯    ◯         ◯     
-        /             /          /              
-      ◯            ◯         ◯            
-         Balanced Tree             UnBalanced Tree
+<img src = "../../IMG/CS/DS/Balanced_UnBalanced.png" alt = "https://stanford.edu/class/archive/cs/cs106b/cs106b.1158/preview-balanced-tree.shtml" width = "600">
 
 #### 균형 트리
 균형 트리는 트리의 모든 노드들이 균형적으로 배치되어 있는 Tree 구조로, 모든 노드의 왼쪽 서브트리와 오른쪽 서브트리 높이 차이가 크지 않다.
@@ -77,18 +68,19 @@ Ex, Red - Black Tree, AVL Tree
 ### Trie
 Trie는 문자열 탐색에 특화된 자료구조로, 각 Node에 Key - Value 형식으로 데이터를 저장하여 문자열을 효율적으로 탐색할 수 있는는 자료구조이다.
 
-               [ Root ] 
-               /     \                
-              A       O             
-             /      /   \           
-            N      N     R 
-          /   \     \                
-         D     T     E : (key : E - value : ONE)
-                 Trie     
+<img src = "../../IMG/CS/DS/trie.png" alt = "https://en.wikipedia.org/wiki/Trie" width = "250">
+
 
 Root는 공백으로 표시하고, 자식 노드들 부터는 Key - Value 형식 데이터를 저장한다. 루트 노드에서 시작하여 하위 노드를 따라 내려가면서 마지막 노드에 도달하면 검색하고자 했던 데이터가 해당 노드에 저장되어 있다.  
 문자열 탐색 시에 Trie에 문자를 저장하고 탐색하게 되면, 문자열 길이가 L이라고 했을 때, O(L)의 시간 복잡도를 가진다.
 
+<br>
+
+### 응용 분야
+
+책보고 추가 하기
+
+<br>
 
 ## Reference
 

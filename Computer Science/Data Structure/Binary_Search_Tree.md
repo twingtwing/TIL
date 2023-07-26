@@ -1,18 +1,19 @@
-# Binary Search Tree
->  Tree의 모든 Node의 차수가 2개 이하면서, 왼쪽 자식 < 오른쪽 자식 관계를 가지는 자료구조
+# 📑 Binary Search Tree
 
-## 📌 이진 검색 트리(Binary Search Tree)이란?
+## 🏷️ 이진 검색 트리(Binary Search Tree)이란?
+>  모든 노드가 최대 2개의 자식 노드를 가지면서, `왼쪽 자식 < 부모 < 오른쪽 자식` 관계를 가지는 자료구조
+
+<img src = "../../IMG/CS/DS/Binary_search_tree.png" alt = "https://en.wikipedia.org/wiki/Binary_search_tree" width = "350">
 
 #### 특징
-- 중복값을 허용하지 않는다.
-- 왼쪽 < 본인 < 오른쪽 관계를 항상 준수한다.
-- 각각의 노드들읨 모든 자식 노드는 이진 검색 트리 구조이다.
+- 이진 검색트리는 중복값을 허용하지 않기 때문에, 동일한 값을 가진 노드가 2개 이상 존재하지 않는다.
+- 왼쪽 < 노드 < 오른쪽 관계를 항상 준수한다. 모든 노드에서 왼쪽 서브트리의 모든 값은 해당 노드긔 값보다 작아야하고, 오른쪽 서브트리에 속한 노드들의 값은 해당 노드의 값보다 커야 한다.
+- 모든 노드에 대해 왼쪽 서브트리와 오른쪽 서브트리는 모두 이진 검색 트리여야 한다.
 
-
-## 📌 이진 검색 트리(Binary Search Tree) 구현
+## 🏷️ 이진 검색 트리(Binary Search Tree) 구현
 
 ### 연산
-> 검색, 삽입, 삭제 연산 평균 시간 복잡도는 O(logN), 최악의 경우, O(n)
+> 검색, 삽입, 삭제 연산 평균 시간 복잡도는 O(logN), 최악의 경우, O(n) 이다.
 
 #### 검색
 검색은 항상 Root Node에서 시작하고 Key 값을 찾을때까지 단말노드로 내려간다.
@@ -33,34 +34,29 @@
 - 1 개의 자식 노드가 있는 경우 (차수가 1인경우)  
     삭제할 노드의 자식노드를 부모노드 위치로 올려준다.
 - 2 개의 자식 노드가 있는 경우 (차수가 2인 경우) 
-    - 왼쪽 서브트리 최댓값   
-    왼쪽 서브트릐의 오른쪽 링크를 따라 계속 이동하여 오른쪽 링크 필드가 null인 노드, 즉 가장 오른쪽에 있는 노드를 찾는 작업이 된다. 
-    - 오른쪽 서브트리 최솟값   
-    오른 쪽 서브트리에서 왼쪽 링크를 따라 계속 이동하여 왼쪽 링크 필드가 null인 노드, 즉 가장 왼쪽에 있는 노드를 찾는 작업이 된다.
-
-<details>
-<summary>Binary Search Tree Code</summary>
+    - 왼쪽 서브트리 최댓값 : 삭제할 노드의 왼쪽 서브트리에서 가장 오른쪽에 있는 단말 노드가 왼쪽 서브트리에서 가장 큰 값이다.
+    - 오른쪽 서브트리 최솟값 : 삭제할 노드의 오른쪽 서브트리에서 가장 왼쪽에 있는 단말 노드가 오른쪽 서브트리에서 가장 작은 값이다.
 
 ```java
-class BSTLinkedList{
+public class BinarySearchTree{
 
     private Node root;
 
-    class Node{
+    private static class Node{
         int data;
         Node left, right;
         Node(){}
         Node(int data){this.data = data;}
     }
 
-    boolean isEmpty(){return this.root == null;}
+    public boolean isEmpty(){return this.root == null;}
 
     public Node search(int data){
         if (isEmpty()) throw new IllegalStateException("Tree is Empty");
         return search(this.root, data);
     }
 
-    public Node search(Node node, int data){
+    private Node search(Node node, int data){
         if (node == null || node.data == data) return node;
         if (node.data > data) return search(node.left,data);
         return search(node.right,data);
@@ -86,10 +82,12 @@ class BSTLinkedList{
         else if (node.data < data) node.right = delete(node.right,data);
         else{
             //경우 1. 자식이 없는 경우
-            if (node.left == null && node.right == null) return null;
+            if (node.left == null && node.right == null) 
+                return null;
 
             // 경우 2. 자식이 한개 있는 경우
-            else if (node.left == null || node.right == null) return node.left == null ? node.right : node.left;
+            else if (node.left == null || node.right == null) 
+                return node.left == null ? node.right : node.left;
 
             // 경우 3. 자식이 2개 있는 경우
             node.data = findMin(node.right); 
@@ -106,14 +104,14 @@ class BSTLinkedList{
 
 }
 ```
-</details>
+
 <br>
 
-#### 삽입
+### 응용 분야
 
-#### 삭제
+책보고 추가 하기
 
-## 📌 코테 유형
+<br>
 
 ## Reference
 
