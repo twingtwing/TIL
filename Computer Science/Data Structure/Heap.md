@@ -52,7 +52,6 @@ public class Heap{
         int max = heap[1];
         heap[1] = heap[size--];
 
-        // 하향식?
         int parent = 1;
         while(parent * 2 <= size){
             int child = parent * 2;
