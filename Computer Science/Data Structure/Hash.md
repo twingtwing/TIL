@@ -1,7 +1,7 @@
-# Hash
+# 📑 Hash
 > 임의 값을 고정길이로 변환하는 행위
 
-## 📌 해시 함수(hash function) 란?
+## 🏷️ 해시 함수(hash function) 란?
 > 키 값을 원소의 위치로 변환하는 함수
 
 데이터를 효율적으로 관리하기 위해 키 값(Key)을 해시 값(hash value)으로 매핑(hashing)하는 함수이다.  
