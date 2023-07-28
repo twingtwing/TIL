@@ -191,9 +191,7 @@ public class Graph{
 - Queue을 이용하여 구현한다.
 - Tree의 경우, level단위로 형제노드들을 차례로 우선적으로 탐색한다.
 
-
-### 응용 분야
-
+<br>
 
 ## Reference
 
