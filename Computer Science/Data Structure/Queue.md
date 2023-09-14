@@ -101,7 +101,7 @@ public class Queue {
     public Queue(int len){
         this.front = 0;
         this.rear = 0;
-        this.queue = new int[len];
+        this.queue = new int[len + 1];
     }
 
     private int getNextIdx(int idx){
