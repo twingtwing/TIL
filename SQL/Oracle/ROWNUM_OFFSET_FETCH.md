@@ -1,4 +1,4 @@
-# 🧷 Oracle Top N 쿼리
+# 🧷 ROWNUM and OFFSET-FETCH
 
 ## 🖇️ ROWNUM
 Oracle의 ROWNUM은 Pseudo Column으로서 SQL 처리 결과 집합의 각 행에 대해 임시로 부여되는 일련번호다. 

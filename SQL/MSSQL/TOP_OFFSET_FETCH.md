@@ -1,4 +1,4 @@
-# 🧷 MSSQL Top N 쿼리
+# 🧷 TOP and OFFSET-FETCH
 
 ## 🖇️ TOP 절
 TOP 절은 결과 집합으로 출력되는 ROW의 수를 제한할 수 있다.
