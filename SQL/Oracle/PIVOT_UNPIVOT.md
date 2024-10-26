@@ -39,7 +39,7 @@ PIVOT(
 ```
 FOR 절의 값(IN 절의 값)들은 열로 변환된다. PIVOT 절은 집계함수에 사용된 STANDARD_COST 컬럼과 FOR 절에 명시되지 않은 DESCS 컬럼을 기준으로 집계된다. 그러므로, Inline View를 사용하여 사용할 열을  지정해야 한다.
 
-![PIVOT TEST 이미지 1](https://drive.google.com/uc?export=view&id=1ycBvnIXkgQlbPnwt8hMCWMzQoDusz3if)
+![PIVOT TEST 이미지 1](https://drive.google.com/thumbnail?id=1ycBvnIXkgQlbPnwt8hMCWMzQoDusz3if&sz=w1000)
 
 #### 예제 #2 별칭
 ```SQL
@@ -57,7 +57,7 @@ PIVOT(
 
 FOR절과 IN절은 모두 별칭을 지정 할 수 있다. IN별칭_FOR별칭 형식으로 열 명이 지정된다. 
 
-![PIVOT TEST 이미지 2](https://drive.google.com/uc?export=view&id=1VYIFD8ZeFMhD8xPdSQ6I6QB1je5o7qHd)
+![PIVOT TEST 이미지 2](https://drive.google.com/thumbnail?id=1VYIFD8ZeFMhD8xPdSQ6I6QB1je5o7qHd&sz=w1000)
 
 **[ 별칭 예시 ]**
 
@@ -84,7 +84,7 @@ PIVOT(
 ```
 집계함수에서 여러 개의 집계함수를 사용할 경우, 서로 구분할 수 있는 별칭을 지정해야 한다. 지정하지 않으면 `ORA-00918: 열의 정의가 애매합니다` 오류가 발생할 수 있다.
 
-![PIVOT TEST 이미지 3](https://drive.google.com/uc?export=view&id=1EaaFjMt7OpFrx0Ym_RCxkRvDDOLu-U7e)
+![PIVOT TEST 이미지 3](https://drive.google.com/thumbnail?id=1EaaFjMt7OpFrx0Ym_RCxkRvDDOLu-U7e&sz=w1000)
 
 <br>
 
@@ -105,7 +105,7 @@ PIVOT(
 ```
 FO R절에 다수의 열을 사용할 경우, FOR 절의 괄호 안에 열 순서와 IN 절의 괄호 안의 열 값 순서가 일치해야 한다.
 
-![PIVOT TEST 이미지 4](https://drive.google.com/uc?export=view&id=1kkyWVLCOKvW9Ib2uNvsX-0aWiV9gwQ5U)
+![PIVOT TEST 이미지 4](https://drive.google.com/thumbnail?id=1kkyWVLCOKvW9Ib2uNvsX-0aWiV9gwQ5U&sz=w1000)
 
 #### 예제 #4 Subquery & ANY
 ORACLE은 IN 절에 동적 값 집합을 직접 사용하기 어려우며, 대신 XML PIVOT을 사용하여 동적 값 집합을 다룰 수 있다. 그러나 XML 없이 Subquery 및 ANY 연산자로 동적 값 집합을 다루는 것은 어렵다.
@@ -129,7 +129,7 @@ PIVOT XML
     );
 ```
 
-![PIVOT TEST 이미지 5](https://drive.google.com/uc?export=view&id=1zeBQ_RTjE2MmcCfTt3BX73z0NBXc1jFN)
+![PIVOT TEST 이미지 5](https://drive.google.com/thumbnail?id=1zeBQ_RTjE2MmcCfTt3BX73z0NBXc1jFN&sz=w1000)
 
 **[ ANY ]**
 
@@ -147,7 +147,7 @@ PIVOT XML
     );
 ```
 
-![PIVOT TEST 이미지 6](https://drive.google.com/uc?export=view&id=1BuQbCxqLK8RI1D_uHiFP0j7j6kS9CTS0)
+![PIVOT TEST 이미지 6](https://drive.google.com/thumbnail?id=1BuQbCxqLK8RI1D_uHiFP0j7j6kS9CTS0&sz=w1000)
 
 #### 예제 #5 동적 SQL
 ORACLE에서는 IN 절에 동적 값 집합을 직접 사용할 수는 없지만, Dynamic SQL을 통해 이를 구현할 수 있다.
@@ -188,7 +188,7 @@ END;
 
 PRINT RESULT
 ```
-![PIVOT TEST 이미지 7](https://drive.google.com/uc?export=view&id=1FfD_stygMDJreJUt1bXUJ7f2DMHRj5WA)
+![PIVOT TEST 이미지 7](https://drive.google.com/thumbnail?id=1FfD_stygMDJreJUt1bXUJ7f2DMHRj5WA&sz=w1000)
 
 ## 🖇️ UNPIVOT
 UNPIVOT 연산은 PIVOT 연산과는 반대로 데이터를 열에서 행으로 변환하는 함수이다. 지정한 열의 값을 행으로 UNPIVOT한다.
@@ -221,7 +221,7 @@ UNPIVOT(
 ```
 IN 절의 열 값이 UNPIVOT절에 명시한 열 값으로 이동한다. 또한, IN 절의 열 이름은 FOR 절에 명시한 열 값으로 이동한다.
 
-![UNPIVOT TEST 이미지 1](https://drive.google.com/uc?export=view&id=1OjzRUyw1grdsR18TyOBSJgT23y2nCZbP)
+![UNPIVOT TEST 이미지 1](https://drive.google.com/thumbnail?id=1OjzRUyw1grdsR18TyOBSJgT23y2nCZbP&sz=w1000)
 
 #### 예제 # 2 별칭
 
@@ -238,7 +238,7 @@ UNPIVOT(
 
 IN 절에 별칭을 지정하면, FOR 절에 명시한 열의 값이 아닌 별칭으로 열 값을 변경 할 수 있다.
 
-![UNPIVOT TEST 이미지 2](https://drive.google.com/uc?export=view&id=1Wl15qiwKt9OwqT_rPhR4XRXTfdfk9W53)
+![UNPIVOT TEST 이미지 2](https://drive.google.com/thumbnail?id=1Wl15qiwKt9OwqT_rPhR4XRXTfdfk9W53&sz=w1000)
 
 #### 예제 # 3 옵션
 
@@ -256,7 +256,7 @@ UNPIVOT INCLUDE NULLS
 
 UNPIVOT 연산은 NULL 값을 포함하지 않지만 `INCLUDE NULLS`을 통해 NULL 값을 결과에 포함 할 수 있다.
 
-![UNPIVOT TEST 이미지 3](https://drive.google.com/uc?export=view&id=10SGoQjBz4uxXYP-c_wAfLqqvy4oQ1VUj)
+![UNPIVOT TEST 이미지 3](https://drive.google.com/thumbnail?id=10SGoQjBz4uxXYP-c_wAfLqqvy4oQ1VUj&sz=w1000)
 
 ## Reference
 

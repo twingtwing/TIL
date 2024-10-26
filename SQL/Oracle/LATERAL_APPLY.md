@@ -36,7 +36,7 @@ ON A.ORDER_ID = B.ORDER_ID
 ORDER BY ORDER_ID;
 ```
 
-![LATERAL TEST 이미지](https://drive.google.com/uc?export=view&id=1kjbRZrHf1XOZiCPLR9-i3Jc7JTrytJHu)
+![LATERAL TEST 이미지](https://drive.google.com/thumbnail?id=1kjbRZrHf1XOZiCPLR9-i3Jc7JTrytJHu&sz=w1000)
 
 ## 🖇️ APPLY
 APPLY 함수는 메인쿼리의 각 행에 대해 서브쿼리를 실행하고, 메인쿼리의 각 행과 서브쿼리의 결과 간에 관계를 설정할 수 있다.
@@ -69,7 +69,7 @@ CROSS APPLY (
 ORDER BY A.EMPLOYEE_ID;
 ```
 
-![CROSS APPLY 이미지](https://drive.google.com/uc?export=view&id=1uhOl0Ahrn_Rc3M3taG3uSM7LWAz3JCB5)
+![CROSS APPLY 이미지](https://drive.google.com/thumbnail?id=1uhOl0Ahrn_Rc3M3taG3uSM7LWAz3JCB5&sz=w1000)
 
 ### OUTER APPLY
 OUTER APPLY 연산자는 메인쿼리의 각 행에 대해 서브쿼리를 실행하며, 서로 매칭되지 않는 행이 있더라도 모든 메인 쿼리의 행을 반환한다. 따라서, LEFT JOIN과 유사한 동작을 한다.
@@ -90,7 +90,7 @@ OUTER APPLY (
 ORDER BY A.EMPLOYEE_ID;
 ```
 
-![OUTER APPLY 이미지](https://drive.google.com/uc?export=view&id=1hPoXPQgu1MC0HMLvKHyFS006skYWSZnS)
+![OUTER APPLY 이미지](https://drive.google.com/thumbnail?id=1hPoXPQgu1MC0HMLvKHyFS006skYWSZnS&sz=w1000)
 
 ## Reference
 
